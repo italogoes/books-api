@@ -13,6 +13,15 @@ class Services {
         return dataSource[this.model].findByPk(id)
     }
 
+    async criaRegistro(novosDados){
+        try {
+            const novoRegistro = dataSource[this.model].create(novosDados);
+            return novoRegistro;
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async atualizaRegistro(dadosAtualizados, id){
         const listadeRegistrosAtualizados = dataSource[this.model].update(dadosAtualizados, {
             where: {
@@ -24,6 +33,16 @@ class Services {
             return false
         }
         return true;
+    }
+
+    async deletaRegistro(id){
+        const registroDeletado = await dataSource[this.model].destroy({
+            where: {
+                id: id
+            }
+        })
+        
+        return true
     }
 }
 
